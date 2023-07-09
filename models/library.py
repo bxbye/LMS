@@ -1,3 +1,5 @@
+from models.book import BookNotBorrowedError, BookUnavailableError
+
 class Library:
     def __init__(self) -> None:
         self.books = []
@@ -9,20 +11,37 @@ class Library:
     def add_book(self, book):
         # create a book to collection
         self.books.append(book)
-        print(f"Book '{book.title}' has been added to book collection.")
+        print(f"Book '{book.title}' has been added to Library.")
     def register_borrower(self, borrower):
         # register new borrower
         self.borrowers.append(borrower)
-        print(f"Borrower '{borrower.name}' has been added to borrowers collection.")
-    def lend_books(self, book, borrower):
+        print(f"Borrower '{borrower.name}' has been added to Library.")
+    def lend_books(self, s_book, s_borrower):
         # if book is availbale we can lend it. so borrower can get it.
-        if book.availability:
-            book.borrow()
-            borrower.borrow_book(book)
-            print(f"Library has lent '{book.title}' book to borrower '{borrower.name}'.")
-        else:
-            print(f"'{book.title}' is currently not available, so we can't lend it.")
-    def return_books(self, book):
+        try:
+            the_book = self.books[s_book]
+            borrower = self.borrowers[s_borrower]
+            the_book.borrow()
+            borrower.borrow_book(the_book)
+            print(f"Library has lent '{the_book.title}' book to borrower '{borrower.name}'.")
+        except BookUnavailableError as e:
+            print(f"BookUnavailableError: {e}")
+    def return_books(self, s_book):
         # update books as available for other borrowers.
-        book.return_book()
-        # we don't need to remove book from borrower's books list. becouse it's not a real time app.
+        try:
+            book = self.books[s_book]
+            book.return_book()
+            # find the borrower who has this book and remove the book from them.
+            for borrower in self.borrowers:
+                if book in borrower.borrowed_books:
+                    borrower.return_book(book)
+        except BookNotBorrowedError as e:
+            print(f"BookNotBorrowedError: {e}")
+    def display_book_status(self):
+        for index, book in enumerate(self.books):
+            print(f"ID: {index}\n{book}")
+            print("*************************")
+    def display_borrower_status(self):
+        for index, borrower in enumerate(self.borrowers):
+            print(f"ID: {index}\n{borrower}")
+            print("*************************")
