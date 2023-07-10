@@ -45,3 +45,14 @@ class Library:
         for index, borrower in enumerate(self.borrowers):
             print(f"ID: {index}\n{borrower}")
             print("*************************")
+
+    def get_book_status(self):
+        result = ""
+        for index, book in enumerate(self.books):
+            result += f"ID: {index}\n{book}\n"
+        return result
+    def get_borrower_status(self):
+        result = ""
+        for index, borrower in enumerate(self.borrowers):
+            result += f"ID: {index}\n{borrower}\n"
+        return result
