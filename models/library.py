@@ -56,3 +56,18 @@ class Library:
         for index, borrower in enumerate(self.borrowers):
             result += f"ID: {index}\n{borrower}\n"
         return result
+    def get_borrower(self, barcode):
+        # check isbn number to find borrower
+        for borrower in self.borrowers:
+            if borrower.does_have_book(barcode):
+                print(borrower)
+                return borrower
+        print(f"Unknown ISBN number: {barcode}")
+        return None
+    """
+    TODO:
+    get_borrower(barcode), desc: barkod okundugu zaman kimde oldugunu bize soylesin.
+    barcode scanner cihaziyla bu uygulama birlikte calisacak. Her kitap barcode numarasiyla birlikte kutuphaneye kayit edilmelidir.
+    borrower sinifindan rutbeye gore, ogrenci mi personel mi diye ayri siniflar turetebiliriz.
+
+    """

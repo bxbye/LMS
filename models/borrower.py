@@ -14,3 +14,9 @@ class Borrower:
     def __str__(self) -> str:
         borrowed_books = ', '.join([str(book.title) for book in self.borrowed_books])
         return f"Name: {self.name}\nBorrowed Books:{borrowed_books}\nFine Amount: {self.fine_amount}"
+    # does_have(isbn)
+    def does_have_book(self, isbn):
+        for book in self.borrowed_books:
+            if isbn == book.ISBN:
+                return True
+        return False

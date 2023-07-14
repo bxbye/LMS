@@ -2,6 +2,7 @@
 Author: Kadir KAYA
 Date: 9 Jul, 2023
 """
+
 from models.book import Book
 from models.borrower import Borrower
 from models.library import Library
@@ -17,6 +18,7 @@ def display_menu():
     print("4. Return Book")
     print("5. Display Book Status")
     print("6. Display Borrower Status")
+    print("7. Scan Barcode")
     print("0. Exit")
 
 def option1():
@@ -53,7 +55,10 @@ def option5():
 def option6():
     print("Executing 6. Display Borrower Status...")
     kadir_library.display_borrower_status()
-
+def option7():
+    print("Executing 7. Scan Barcode...")
+    barcode = input("Scan barcode as ISBN number: ")
+    kadir_library.get_borrower(barcode)
 
 # Main menu loop
 while True:
@@ -72,6 +77,8 @@ while True:
         option5()
     elif choice == '6':
         option6()
+    elif choice == '7':
+        option7()
     elif choice == '0':
         print("Exiting the program...")
         break
